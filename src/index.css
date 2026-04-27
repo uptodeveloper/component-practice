@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root {
+  font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  color: #1f2937;
+  background:
+    radial-gradient(circle at top, rgba(251, 191, 36, 0.3), transparent 35%),
+    linear-gradient(180deg, #fff7ed 0%, #fffbeb 38%, #ffffff 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input {
+  font: inherit;
+}
