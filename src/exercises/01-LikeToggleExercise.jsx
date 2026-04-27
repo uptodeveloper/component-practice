@@ -1,10 +1,20 @@
+import { useState } from "react";
+
 export default function LikeToggleExercise() {
+  // 불린 상태 값
+  const [isLike, setIsLike] = useState(false);
+  // 클릭핸들러
+  const toggleLikeHandler = () => {
+    setIsLike((prev) => !prev);
+  };
+
+  const statusText = isLike ? "좋아요" : "취소";
+  const buttonText = isLike ? "취소" : "좋아요";
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5">
       <h2 className="text-xl font-bold">01. 좋아요 토글</h2>
       <p className="mt-2 text-sm leading-6 text-slate-600">
-        버튼을 누르면 좋아요 상태가 켜지고, 다시 누르면 꺼지도록
-        구현해보세요.
+        버튼을 누르면 좋아요 상태가 켜지고, 다시 누르면 꺼지도록 구현해보세요.
       </p>
 
       <TodoList
@@ -17,9 +27,12 @@ export default function LikeToggleExercise() {
       />
 
       <div className="mt-5 rounded-md border border-slate-200 p-4">
-        <p className="text-sm text-slate-600">현재 상태: 좋아요 취소</p>
-        <button className="mt-3 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold">
-          좋아요
+        <p className="text-sm text-slate-600">현재 상태: {statusText}</p>
+        <button
+          onClick={toggleLikeHandler}
+          className="mt-3 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold"
+        >
+          {buttonText}
         </button>
       </div>
     </section>
