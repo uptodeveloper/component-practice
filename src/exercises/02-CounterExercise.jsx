@@ -1,4 +1,19 @@
+import { useState } from "react";
+
 export default function CounterExercise() {
+  // 초기값 0
+  const [count, setCount] = useState(0);
+  // count === 0 일때, 아래로 x
+  const handleIncrement = () => {
+    setCount((prev) => prev + 1);
+  };
+  const handleDecrement = () => {
+    if (count === 0) {
+      return;
+    }
+    setCount((prev) => prev - 1);
+  };
+
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5">
       <h2 className="text-xl font-bold">02. 카운터</h2>
@@ -16,11 +31,17 @@ export default function CounterExercise() {
       />
 
       <div className="mt-5 flex items-center gap-3 rounded-md border border-slate-200 p-4">
-        <button className="rounded-md border border-slate-300 px-4 py-2 font-semibold">
+        <button
+          onClick={handleDecrement}
+          className="rounded-md border border-slate-300 px-4 py-2 font-semibold"
+        >
           -
         </button>
-        <span className="text-xl font-bold">0</span>
-        <button className="rounded-md border border-slate-300 px-4 py-2 font-semibold">
+        <span className="text-xl font-bold">{count}</span>
+        <button
+          onClick={handleIncrement}
+          className="rounded-md border border-slate-300 px-4 py-2 font-semibold"
+        >
           +
         </button>
       </div>
