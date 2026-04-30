@@ -1,6 +1,15 @@
+import { useState } from "react";
+
 const menuItems = ["마이페이지", "주문내역", "로그아웃"];
 
 export default function DropdownExercise() {
+  // 메뉴 열기 였을 때, 보여야 되고
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleMenuHandle = () => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  };
+
+  const buttonText = isOpen ? "메뉴 닫기" : "메뉴 열기";
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5">
       <h2 className="text-xl font-bold">03. 드롭다운</h2>
@@ -18,16 +27,21 @@ export default function DropdownExercise() {
       />
 
       <div className="mt-5 rounded-md border border-slate-200 p-4">
-        <button className="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold">
-          메뉴 열기
+        <button
+          onClick={toggleMenuHandle}
+          className="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold"
+        >
+          {buttonText}
         </button>
-        <ul className="mt-3 rounded-md border border-slate-200">
-          {menuItems.map((item) => (
-            <li key={item} className="px-4 py-2 text-sm">
-              {item}
-            </li>
-          ))}
-        </ul>
+        {isOpen && (
+          <ul className="mt-3 rounded-md border border-slate-200">
+            {menuItems.map((item) => (
+              <li key={item} className="px-4 py-2 text-sm">
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );
