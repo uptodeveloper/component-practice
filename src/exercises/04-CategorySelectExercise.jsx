@@ -1,6 +1,17 @@
+import { useState } from "react";
+
 const categories = ["audio", "device", "keyboard"];
 
 export default function CategorySelectExercise() {
+  //카테고리 선택 해제
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const selectedCategoryText = selectedCategory ?? "선택 없음";
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory((prevSelectedCategory) =>
+      prevSelectedCategory === category ? null : category,
+    );
+  };
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5">
       <h2 className="text-xl font-bold">04. 카테고리 선택 / 해제</h2>
@@ -23,14 +34,17 @@ export default function CategorySelectExercise() {
         {categories.map((category) => (
           <button
             key={category}
-            className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700"
+            onClick={() => handleCategoryClick(category)}
+            className={`rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 ${selectedCategory === category ? "bg-blue-500" : ""}`}
           >
             {category}
           </button>
         ))}
       </div>
 
-      <p className="mt-4 text-sm text-slate-700">현재 선택: 선택 없음</p>
+      <p className="mt-4 text-sm text-slate-700">
+        현재 선택:{selectedCategoryText}
+      </p>
     </section>
   );
 }
