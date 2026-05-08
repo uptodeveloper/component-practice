@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const tabs = [
   {
     id: "description",
@@ -20,6 +22,15 @@ const tabs = [
 ];
 
 export default function TabMenuExercise() {
+  //탭 버튼 누를시 선택된 탭의 제목과 내용이 보이도록
+  // 탭 선택 해서 id 받고
+  const handleSelectTab = (tabId) => {
+    setSelectedTabId(tabId);
+  };
+  // 받은 id state 에 업데이트
+  const [selectedTabId, setSelectedTabId] = useState("description");
+  const selectedTab = tabs.find((tab) => tab.id === selectedTabId);
+
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5">
       <h2 className="text-xl font-bold">06. 탭 메뉴</h2>
@@ -38,21 +49,30 @@ export default function TabMenuExercise() {
       />
 
       <div className="mt-5 flex flex-wrap gap-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700"
-          >
-            {tab.label}
-          </button>
-        ))}
+        {tabs.map((tab) => {
+          const isSelected = selectedTab.id === tab.id;
+
+          return (
+            <button
+              onClick={() => handleSelectTab(tab.id)}
+              key={tab.id}
+              className={`rounded-md border px-4 py-2 text-sm font-semibold text-slate-700 ${isSelected ? " border-amber-600 text-white bg-amber-950" : ""} `}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
 
       <article className="mt-4 rounded-md border border-slate-200 p-4">
         <h3 className="font-bold">아직 구현 전</h3>
-        <p className="mt-2 text-sm text-slate-600">
+
+        <div className="mt-2 text-sm text-slate-600">
           선택된 탭의 내용이 여기에 표시되어야 합니다.
-        </p>
+          <p>졔목 : {selectedTab.title}</p>
+          <p>내용 : {selectedTab.content}</p>
+          <p>라벨 : {selectedTab.label}</p>
+        </div>
       </article>
     </section>
   );
