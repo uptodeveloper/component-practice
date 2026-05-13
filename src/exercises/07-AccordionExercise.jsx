@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const faqs = [
   {
     id: 1,
@@ -17,12 +19,22 @@ const faqs = [
 ];
 
 export default function AccordionExercise() {
+  //faq id 열려있어야되고
+  const [openFaqId, setOpenFaqId] = useState(null);
+  // 클릭시 해당 id state에 넣고
+  // 같은 질문 클릭시 닫히고
+  const handleFaqClick = (id) => {
+    setOpenFaqId(openFaqId === id ? null : id);
+  };
+
+  // 열려있는지 판단하는 조건에 이름을 붙이고
+  // 열려있는 질문만 답변을 보여줘야된다
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5">
       <h2 className="text-xl font-bold">07. FAQ 아코디언</h2>
       <p className="mt-2 text-sm leading-6 text-slate-600">
-        질문을 클릭하면 답변이 열리고, 다시 클릭하면 닫히도록
-        구현해보세요. 한 번에 하나의 답변만 열려야 합니다.
+        질문을 클릭하면 답변이 열리고, 다시 클릭하면 닫히도록 구현해보세요. 한
+        번에 하나의 답변만 열려야 합니다.
       </p>
 
       <TodoList
@@ -36,13 +48,21 @@ export default function AccordionExercise() {
       />
 
       <div className="mt-5 divide-y divide-slate-200 rounded-md border border-slate-200">
-        {faqs.map((faq) => (
-          <div key={faq.id}>
-            <button className="w-full bg-white px-4 py-3 text-left font-semibold text-slate-900">
-              {faq.question}
-            </button>
-          </div>
-        ))}
+        {faqs.map((faq) => {
+          const isOpen = faq.id === openFaqId;
+
+          return (
+            <div key={faq.id}>
+              <button
+                onClick={() => handleFaqClick(faq.id)}
+                className="w-full bg-white px-4 py-3 text-left font-semibold text-slate-900"
+              >
+                {faq.question}
+              </button>
+              {isOpen && <p> {faq.answer}</p>}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
