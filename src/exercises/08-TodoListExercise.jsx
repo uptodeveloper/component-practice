@@ -1,4 +1,39 @@
+import { useState } from "react";
+
 export default function TodoListExercise() {
+  //입력값 저장할 상태
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState("");
+
+  //입력 값 가져올 핸들러
+  const handleOnChangeTodoInputValue = (e) => {
+    setTodo(e.target.value);
+  };
+  // 입렵 값 추가시 배열로 모으는 핸들러 (빈값 방지)
+  const handleOnClickAddTodo = () => {
+    if (todo.trim() === "") return;
+    const newTodo = { id: Date.now(), content: todo, isComplete: false };
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    setTodo("");
+  };
+  // 완료/ 미완료 토글
+  const handleToggleIsComplete = (todoSelectedId) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((prevTodo) =>
+        prevTodo.id === todoSelectedId
+          ? { ...prevTodo, isComplete: !prevTodo.isComplete }
+          : prevTodo,
+      ),
+    );
+  };
+
+  // 삭제
+  const handleOnclickDeleteTodo = (todoSelectedId) => {
+    return setTodos((prevTodos) =>
+      prevTodos.filter((prevTodo) => prevTodo.id !== todoSelectedId),
+    );
+  };
+
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5">
       <h2 className="text-xl font-bold">08. 투두 리스트</h2>
@@ -19,16 +54,33 @@ export default function TodoListExercise() {
 
       <div className="mt-5 flex gap-2">
         <input
+          value={todo}
+          onChange={handleOnChangeTodoInputValue}
           placeholder="할 일 입력"
           className="min-w-0 flex-1 rounded-md border border-slate-300 px-3 py-2"
         />
-        <button className="rounded-md border border-slate-900 bg-slate-900 px-4 py-2 font-semibold text-white">
+        <button
+          onClick={handleOnClickAddTodo}
+          className="rounded-md border border-slate-900 bg-slate-900 px-4 py-2 font-semibold text-white"
+        >
           추가
         </button>
       </div>
 
       <ul className="mt-4 rounded-md border border-slate-200 p-4 text-sm text-slate-600">
-        <li>아직 할 일이 없습니다.</li>
+        {todos.map((i) => {
+          return (
+            <li key={i.id}>
+              {i.content}
+              <button onClick={() => handleToggleIsComplete(i.id)}>
+                {i.isComplete ? "완료" : "미완료"}
+              </button>
+              <button onClick={() => handleOnclickDeleteTodo(i.id)}>
+                삭제
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
